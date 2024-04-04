@@ -41,19 +41,22 @@ function TodoApp({initialTodos}) {
 
           <div className="col-md-6">
             {todos.length === 0 && <span className="text-muted">You have no todos.</span>}
+            {todos.length !== 0 &&
             <EditableTodoList todos={todos} update={update} remove={remove}/>
+            }
           </div>
 
           <div className="col-md-6">
-            (if no top todo, omit this whole section)
+            {todos.length !== 0 &&
             <section className="mb-4">
               <h3>Top Todo</h3>
-              <TopTodo />
+            <TopTodo todos = {todos}/>
             </section>
+            }
 
             <section>
               <h3 className="mb-3">Add Nü</h3>
-              <TodoForm/>
+              <TodoForm handleSave={create}/>
             </section>
           </div>
 

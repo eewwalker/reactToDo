@@ -13,16 +13,11 @@ import TodoForm from "./TodoForm";
  */
 
 function EditableTodo({ todo, update, remove }) {
+  const [editToggle, setEditToggle] = useState(false);
 
-  let editClicked = false;
   /** Toggle if this is being edited */
   function toggleEdit() {
-    editClicked = !editClicked;
-    return (
-      <div>
-        <TodoForm initialFormData={{ title: todo.title, description: todo.description, priority: todo.priority }} />
-      </div>
-    );
+    setEditToggle(!editToggle);
   }
 
   /** Call remove fn passed to this. */
@@ -31,15 +26,15 @@ function EditableTodo({ todo, update, remove }) {
   }
 
   /** Edit form saved; toggle isEditing and update in ancestor. */
-  function handleSave(formData) {
-    editClicked = !editClicked;
-    update(formData);
+  function handleSave(todo) {
+    setEditToggle(!editToggle);
+    update(todo);
   }
 
   return (
     <div className="EditableTodo">
-      {editClicked && <TodoForm />}
-      {!editClicked && <div className="mb-3">
+      {editToggle && <TodoForm handleSave={handleSave} initialFormData={todo}  />}
+      {!editToggle && <div className="mb-3">
         <div className="float-end text-sm-end">
           <button
             className="EditableTodo-toggle btn-link btn btn-sm"

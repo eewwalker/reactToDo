@@ -16,7 +16,7 @@ import React, { useState } from "react";
 function TodoForm({initialFormData = {
     title: "",
     description: "",
-    priority: ""
+    priority: 1
   }, handleSave}) {
 
   const [todoData, setTodoData] = useState(initialFormData);
