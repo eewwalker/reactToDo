@@ -7,16 +7,37 @@ import React, { useState } from "react";
  * - initialFormData
  * - handleSave: function to call in parent.
  *
+ * State:
+ * -todoData {title, description, priority}
+ *
  * { TodoApp, EditableTodo } -> TodoForm
  */
 
-function TodoForm() {
+function TodoForm({initialFormData = {
+    title: "",
+    description: "",
+    priority: ""
+  }, handleSave}) {
+
+  const [todoData, setTodoData] = useState(initialFormData);
 
   /** Update form input. */
-  function handleChange(evt) { }
+  function handleChange(evt) {
+    const {name, value} = evt.target;
+
+    setTodoData(fData => ({
+      ...fData,
+      [name] : value
+    }))
+   }
 
   /** Call parent function and clear form. */
-  function handleSubmit(evt) { }
+  function handleSubmit(evt) {
+    evt.preventDefault();
+
+    handleSave(todoData);
+    setTodoData(initialFormData);
+   }
 
   return (
       <form className="NewTodoForm" onSubmit={handleSubmit}>
@@ -28,7 +49,7 @@ function TodoForm() {
               className="form-control"
               placeholder="Title"
               onChange={handleChange}
-              value="FIXME"
+              value={todoData.title}
               aria-label="Title"
           />
         </div>
@@ -40,7 +61,7 @@ function TodoForm() {
               className="form-control"
               placeholder="Description"
               onChange={handleChange}
-              value="FIXME"
+              value={todoData.description}
               aria-label="Description"
           />
         </div>
@@ -52,7 +73,7 @@ function TodoForm() {
             </label>
             <select id="newTodo-priority"
                     name="priority"
-                    value="FIXME"
+                    value={todoData.priority}
                     onChange={handleChange}
                     className="form-control form-control-sm d-inline-flex"
             >
