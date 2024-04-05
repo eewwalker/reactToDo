@@ -6,11 +6,13 @@ import Todo from "./Todo";
 
 describe("productiv Todo", function () {
   it("renders without crashing", function () {
-    render(<Todo />);
+    const todo = {title: "newtitle", description: "y", priority:1};
+    render(<Todo todo={todo}/>);
   });
 
     it("contains expected title", function () {
-    const result = render(<Todo />);
-    expect(result.queryByText("priority")).toBeInTheDocument();
+    const todo = {title: "newtitle", description: "y", priority:1};
+    const result = render(<Todo todo={todo}/>);
+    expect(result.queryByText("newtitle")).toBeInTheDocument();
   });
 });

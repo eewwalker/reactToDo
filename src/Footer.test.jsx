@@ -11,6 +11,6 @@ describe("productiv footer", function () {
 
     it("contains expected title", function () {
     const result = render(<Footer />);
-    expect(result.queryByText("Flüffy Data Enterprises")).toBeInTheDocument();
+    expect(result.queryByText("Prødutïv is copyright ©2020 by Flüffy Data Enterprises, Inc.")).toBeInTheDocument();
   });
 });
