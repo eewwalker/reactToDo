@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 
 import React from "react";
 import { fireEvent, queryAllByText, render } from "@testing-library/react";
@@ -10,11 +10,13 @@ describe("productiv form", function () {
     render(<TodoForm />);
   })
 
+
   it("empties the input after submit", function () {
-    function fakeCreate(newTodo) {
-      let todo = {newTodo};
-    }
-    const result = render(<TodoForm handleSave={fakeCreate}/>);
+    // function fakeCreate(newTodo) {
+      //   let todo = {newTodo};
+      // }
+    const mockCreate = vi.fn();
+    const result = render(<TodoForm handleSave={mockCreate}/>);
 
     const titleInput = result.getByLabelText("Title");
 
@@ -26,6 +28,7 @@ describe("productiv form", function () {
     fireEvent.change(descriptionInput, { target: { value: "testTodo" } });
 
     fireEvent.click(submitBtn);
+    expect(mockCreate).toHaveBeenCalledTimes(1);
 
     expect(titleInput.value).toEqual("");
   });
