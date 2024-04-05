@@ -33,4 +33,38 @@ describe("working TodoApp", function () {
     expect(result.queryAllByText("newtitle")[0]).toBeInTheDocument();
 
   });
+
+  it("updates Todo", function () {
+    const result = render(<TodoApp initialTodos={[{
+      title: "newtitle",
+      description: "Description"}]} />);
+
+    expect(result.queryAllByText("newtitle")[0]).toBeInTheDocument();
+
+    const editBtn = result.queryByText("Edit");
+    fireEvent.click(editBtn);
+    //we expect there are multiple labels with "Title" (todo + toptodo)
+    const titleInput = result.getAllByLabelText("Title")[0];
+    const submitBtn = result.queryAllByText("Gø!")[0];
+
+    fireEvent.change(titleInput, { target: { value: "updatedtitle" } });
+    fireEvent.click(submitBtn);
+
+    expect(result.queryByText("newtitle")).not.toBeInTheDocument();
+    expect(result.queryAllByText("updatedtitle")[0]).toBeInTheDocument();
+  })
+
+  it("deletes Todo", function () {
+    const result = render(<TodoApp initialTodos={[{
+      title: "newtitle",
+      description: "Description"}]} />);
+
+      expect(result.queryAllByText("newtitle")[0]).toBeInTheDocument();
+
+      const deleteBtn = result.queryByText("Del");
+      fireEvent.click(deleteBtn);
+
+      expect(result.queryByText("newtitle")).not.toBeInTheDocument();
+  })
+
 });
